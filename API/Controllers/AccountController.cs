@@ -48,7 +48,7 @@ namespace API.Controllers
             AppUser user = await _dataContext.Users.SingleOrDefaultAsync(x => x.UserName.Equals(loginDto.Username));
 
             if (user == null)
-                return Unauthorized();
+                return Unauthorized("Invalid Usersname");
 
             using HMACSHA512 hmac = new HMACSHA512(user.PasswordSalt);
             byte[] computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
@@ -56,7 +56,7 @@ namespace API.Controllers
             for (int i = 0; i < computedHash.Length; i++)
             {
                 if (computedHash[i] != user.PasswordHash[i]) 
-                    return Unauthorized();
+                    return Unauthorized("Invalid Password");
             }
 
             return new UserDto { Username = user.UserName, Token = _tokenService.CreateToken(user) };
