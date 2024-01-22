@@ -1,5 +1,6 @@
 ﻿using API.DTO;
 using API.Entities;
+using API.Heplers;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace API.Interfaces
         Task<IEnumerable<AppUser>> GetUsersAcync();
         Task<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByUserNameAsync(string username);
-        Task<IEnumerable<MemberDto>> GetMembersAsync();
+        Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams);
         Task<MemberDto> GetMemberAsync(string username);
     }
 }
