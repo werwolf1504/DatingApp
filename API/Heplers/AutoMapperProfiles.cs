@@ -17,6 +17,9 @@ namespace API.Heplers
             CreateMap<Photo, PhotoDto>();
             CreateMap<MemberUpdateDto, AppUser>();
             CreateMap<RegisterDto, AppUser>();
+            CreateMap<Message, MessageDto>()
+                .ForMember(x=>x.SenderPhotoUrl, y=>y.MapFrom(s=>s.Sender.Photos.FirstOrDefault(p=>p.IsMain).Url))
+                .ForMember(x=>x.RecipientPhotoUrl, y=>y.MapFrom(s=>s.Recipient.Photos.FirstOrDefault(p=>p.IsMain).Url));
         }
     }
 }
