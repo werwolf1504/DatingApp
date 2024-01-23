@@ -15,10 +15,10 @@ namespace API.Heplers
 
             if(!resultContext.HttpContext.User.Identity.IsAuthenticated) return;
 
-            string userId = resultContext.HttpContext.User.GetUserId();
+            int userId = resultContext.HttpContext.User.GetUserId();
 
             IUserRepository repo = resultContext.HttpContext.RequestServices.GetRequiredService<IUserRepository>();
-            Entities.AppUser user = await repo.GetUserByIdAsync(int.Parse(userId));
+            Entities.AppUser user = await repo.GetUserByIdAsync(userId);
             
             user.LastActive = DateTime.UtcNow;
             await repo.SaveAllAsinc();
